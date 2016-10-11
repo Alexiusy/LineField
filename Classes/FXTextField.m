@@ -1,68 +1,61 @@
 //
-//  FXScrollTextField.m
-//  FXFlatMapView
+//  FXTextField.m
+//  FXTextField
 //
 //  Created by Zeacone on 16/9/27.
 //  Copyright © 2016年 Zeacone. All rights reserved.
 //
 
-#import "FXScrollTextField.h"
+#import "FXTextField.h"
 
-
-@interface FXScrollTextField ()
+@interface FXTextField ()
 
 @property (nonatomic, strong) UILabel *floatLabel;
 
 @end
 
-@implementation FXScrollTextField
+@implementation FXTextField
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
+#pragma mark - default initialize methods
+- (instancetype)initWithCoder:(NSCoder *)coder {
     if (self = [super initWithCoder:coder]) {
         [self buildDefaultAppearance];
     }
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self buildDefaultAppearance];
     }
     return self;
 }
 
-- (instancetype)init
-{
+- (instancetype)init {
     if (self = [super init]) {
-        NSAssert(NO, @"Don't support this. Please use initWithFrame or storyboard or xib.");
+        [self buildDefaultAppearance];
     }
     return self;
 }
 
+#pragma mark - overrides default placeholder setter
 - (void)setPlaceholder:(NSString *)placeholder {
     [super setPlaceholder:placeholder];
     self.floatLabel.text = placeholder;
 }
 
-- (void)setText:(NSString *)text {
-    [super setText:text];
-    [self floatingPlaceHolder];
-}
-
 - (void)buildDefaultAppearance {
     
     self.borderStyle = UITextBorderStyleNone;
+    // Keep the text on the bottom
+    self.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
     
     self.floatLabel = [UILabel new];
-    self.floatLabel.font = [UIFont systemFontOfSize:9];
+    self.floatLabel.font = [UIFont systemFontOfSize:12];
     self.floatLabel.textColor = [UIColor greenColor];
     self.floatLabel.text = self.placeholder;
     self.floatLabel.alpha = 0;
     [self addSubview:self.floatLabel];
-    
-    self.floatLabel.frame = CGRectMake(0, CGRectGetMidY(self.bounds), CGRectGetWidth(self.bounds), 8);
     
     [self addPanGestureForScroll];
     [self addNotification];
@@ -77,7 +70,7 @@
     self.selectedTextRange = [self textRangeFromPosition:self.beginningOfDocument toPosition:self.beginningOfDocument];
 }
 
-#pragma mark - 移动光标
+#pragma mark - Move the cursor
 - (void)scrollCursor:(UIPanGestureRecognizer *)pan {
     
     static NSInteger call_count = 0;
@@ -89,7 +82,8 @@
     UITextPosition *newPosition;
     CGPoint translation = [pan translationInView:pan.view];
     
-    if (call_count % 3 == 0) {
+    // Control speed of text when scrolling.
+    if (call_count % 10 == 0) {
         if (translation.x < 0) {
             newPosition = [self positionFromPosition:selectedRange.start inDirection:UITextLayoutDirectionRight offset:1];
         } else {
@@ -125,35 +119,38 @@
     self.floatLabel.textColor = self.floatLabelNormalColor;
 }
 - (void)textFieldTextDidChange:(NSNotification *)notification {
-    [self floatingPlaceHolder];
+    
 }
 
+#pragma mark - Hidden/Show floating label
 - (void)floatingPlaceHolder {
-    CGFloat offset = 0;
-    CGFloat alpha = 0;
     
-    if (self.text.length == 0) {
-        offset = self.floatLabel.frame.origin.y == CGRectGetMidY(self.bounds) ? 0 : CGRectGetMidY(self.bounds);
-        alpha = 0;
-    } else {
-        offset = self.floatLabel.frame.origin.y == 0 ? 0 : -CGRectGetMidY(self.bounds);
-        alpha = 1.0;
-    }
+    CGSize size = [self.floatLabel sizeThatFits:self.bounds.size];
     
     [UIView animateWithDuration:self.floatingDuration!=0?:0.5 animations:^{
-        self.floatLabel.frame = CGRectOffset(self.floatLabel.frame, 0, offset);
-        self.floatLabel.alpha = alpha;
+        
+        if (self.text.length == 0 && self.floatLabel.frame.origin.y != CGRectGetMidY(self.bounds)) {
+            self.floatLabel.frame = CGRectMake(0, CGRectGetMidY(self.bounds), size.width, size.height);
+            self.floatLabel.alpha = 0;
+        } else if (self.text.length != 0 || self.floatLabel.frame.origin.y != 0) {
+            
+            if (!self.isFirstResponder) {
+                self.floatLabel.textColor = self.floatLabelNormalColor;
+            }
+            self.floatLabel.frame = CGRectMake(0, 0, size.width, size.height);
+            self.floatLabel.alpha = 1.0;
+        }
     }];
 }
 
 #pragma mark - system call
 - (void)layoutSubviews {
     [super layoutSubviews];
-    CGRect frame = self.frame;
-    frame.size.height = 30;
-    self.frame = frame;
+    
+    [self floatingPlaceHolder];
 }
 
+#pragma mark - Custom draw line
 - (void)drawRect:(CGRect)rect {
     
     CGContextRef context = UIGraphicsGetCurrentContext();

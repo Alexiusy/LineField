@@ -1,6 +1,6 @@
 //
-//  FXScrollTextField.h
-//  FXFlatMapView
+//  FXTextField.h
+//  FXTextField
 //
 //  Created by Zeacone on 16/9/27.
 //  Copyright © 2016年 Zeacone. All rights reserved.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 IB_DESIGNABLE
-@interface FXScrollTextField : UITextField
+@interface FXTextField : UITextField
 
 /**
  *  浮动标签正常情况下的文字颜色，即处于非编辑状态下的颜色
