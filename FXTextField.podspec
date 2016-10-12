@@ -1,7 +1,11 @@
 Pod::Spec.new do |s|
   s.name         = “FXTextField”
   s.version      = "1.0.0"
-  s.summary      = "The package of useful tools, include categories and classes"
+  s.summary      = "A subclass of UITextField which has some features as follow.
+
+Supports moving cursor by pan gesture.
+Supports floating label to show it's placeholder text.
+To be continued."
   s.license      = “GPL”
   s.authors      = { ‘Zeacone’ => ‘andreboot42@gmail.com'}
   s.platform     = :ios, “7.0”
