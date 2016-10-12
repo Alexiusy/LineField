@@ -29,11 +29,16 @@ IB_DESIGNABLE
 /**
  *  浮动标签的字体
  */
-@property (nonatomic, strong) IBInspectable UIFont *floatLabelFont;
+@property (nonatomic, strong) UIFont *floatLabelFont;
 
 /**
  *  标签上浮或者隐藏的时间
  */
 @property (nonatomic, assign) NSTimeInterval floatingDuration;
+
+/**
+ *  textfield文字滑动的速度，值越大，滑动速度越慢，默认为10
+ */
+@property (nonatomic, assign) NSInteger scrollSpeed;
 
 @end

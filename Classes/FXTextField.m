@@ -51,7 +51,7 @@
     self.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
     
     self.floatLabel = [UILabel new];
-    self.floatLabel.font = [UIFont systemFontOfSize:12];
+    self.floatLabel.font = self.floatLabelFont ? :[UIFont systemFontOfSize:12];
     self.floatLabel.textColor = [UIColor greenColor];
     self.floatLabel.text = self.placeholder;
     self.floatLabel.alpha = 0;
@@ -83,7 +83,7 @@
     CGPoint translation = [pan translationInView:pan.view];
     
     // Control speed of text when scrolling.
-    if (call_count % 10 == 0) {
+    if (call_count % (self.scrollSpeed==0?10:self.scrollSpeed) == 0) {
         if (translation.x < 0) {
             newPosition = [self positionFromPosition:selectedRange.start inDirection:UITextLayoutDirectionRight offset:1];
         } else {
@@ -113,10 +113,10 @@
 
 #pragma mark - notification of textfield action
 - (void)textFieldDidBeginEditing:(NSNotification *)notification {
-    self.floatLabel.textColor = self.floatLabelFocusColor;
+    self.floatLabel.textColor = self.floatLabelFocusColor?:[UIColor colorWithRed:0.000 green:0.502 blue:0.251 alpha:1.000];
 }
 - (void)textFieldDidEndEditing:(NSNotification *)notification {
-    self.floatLabel.textColor = self.floatLabelNormalColor;
+    self.floatLabel.textColor = self.floatLabelNormalColor?:[UIColor lightGrayColor];
 }
 - (void)textFieldTextDidChange:(NSNotification *)notification {
     
@@ -156,6 +156,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSetLineWidth(context, 1);
+    
     CGContextSetStrokeColorWithColor(context, self.bottomLineColor.CGColor);
     
     CGPoint aPoints[2];
