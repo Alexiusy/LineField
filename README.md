@@ -1,4 +1,4 @@
-# FXTextField
+# FXTextField ![](https://img.shields.io/badge/license-GPL%203.0-blue.svg) ![](https://img.shields.io/badge/pod-v1.0.0-blue.svg)
 
 A subclass of UITextField which has some features as follow.
 
