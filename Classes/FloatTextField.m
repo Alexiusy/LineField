@@ -1,61 +1,66 @@
 //
-//  FXTextField.m
-//  FXTextField
+//  FloatTextField.m
+//  FloatTextField
 //
 //  Created by Zeacone on 16/9/27.
 //  Copyright © 2016年 Zeacone. All rights reserved.
 //
 
-#import "FXTextField.h"
+#import "FloatTextField.h"
 
-@interface FXTextField ()
+@interface FloatTextField ()
 
 @property (nonatomic, strong) UILabel *floatLabel;
 
 @end
 
-@implementation FXTextField
+@implementation FloatTextField
 
 #pragma mark - default initialize methods
 - (instancetype)initWithCoder:(NSCoder *)coder {
     if (self = [super initWithCoder:coder]) {
-        [self buildDefaultAppearance];
+        [self defaultAppearance];
     }
     return self;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        [self buildDefaultAppearance];
-    }
-    return self;
-}
-
-- (instancetype)init {
-    if (self = [super init]) {
-        [self buildDefaultAppearance];
+        [self defaultAppearance];
     }
     return self;
 }
 
 #pragma mark - overrides default placeholder setter
 - (void)setPlaceholder:(NSString *)placeholder {
-    [super setPlaceholder:placeholder];
-    self.floatLabel.text = placeholder;
+    if (placeholder) {
+        self.floatLabel.text = placeholder;
+    } else {
+        [super setPlaceholder:placeholder];
+    }
 }
 
-- (void)buildDefaultAppearance {
+- (void)setText:(NSString *)text {
+    [super setText:text];
+    
+    [self floating:self.text.length != 0 Focus:NO];
+}
+
+- (void)defaultAppearance {
     
     self.borderStyle = UITextBorderStyleNone;
     // Keep the text on the bottom
     self.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
     
     self.floatLabel = [UILabel new];
-    self.floatLabel.font = self.floatLabelFont ? :[UIFont systemFontOfSize:12];
-    self.floatLabel.textColor = [UIColor greenColor];
+    self.floatLabel.font = self.floatFont;
     self.floatLabel.text = self.placeholder;
-    self.floatLabel.alpha = 0;
     [self addSubview:self.floatLabel];
+    
+    self.placeholder = nil;
+    
+    [self floating:self.text.length != 0 Focus:NO];
+
     
     [self addPanGestureForScroll];
     [self addNotification];
@@ -106,48 +111,68 @@
                                                  name:UITextFieldTextDidEndEditingNotification
                                                object:self];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textFieldTextDidChange:)
+                                             selector:@selector(textFieldTextDidChanged:)
                                                  name:UITextFieldTextDidChangeNotification
                                                object:self];
 }
 
 #pragma mark - notification of textfield action
 - (void)textFieldDidBeginEditing:(NSNotification *)notification {
-    self.floatLabel.textColor = self.floatLabelFocusColor?:[UIColor colorWithRed:0.000 green:0.502 blue:0.251 alpha:1.000];
+    [self floating:self.text.length != 0 Focus:YES];
 }
+
 - (void)textFieldDidEndEditing:(NSNotification *)notification {
-    self.floatLabel.textColor = self.floatLabelNormalColor?:[UIColor lightGrayColor];
+    [self floating:self.text.length != 0 Focus:NO];
 }
-- (void)textFieldTextDidChange:(NSNotification *)notification {
-    
+
+- (void)textFieldTextDidChanged:(NSNotification *)notification {
+    [self floating:self.text.length != 0 Focus:YES];
 }
 
 #pragma mark - Hidden/Show floating label
-- (void)floatingPlaceHolder {
+- (void)floating:(BOOL)floating Focus:(BOOL)focus {
     
     CGSize size = [self.floatLabel sizeThatFits:self.bounds.size];
     
-    [UIView animateWithDuration:self.floatingDuration!=0?:0.5 animations:^{
+    [UIView animateWithDuration:self.floatingDuration animations:^{
         
-        if (self.text.length == 0 && self.floatLabel.frame.origin.y != CGRectGetMidY(self.bounds)) {
-            self.floatLabel.frame = CGRectMake(0, CGRectGetMidY(self.bounds), size.width, size.height);
-            self.floatLabel.alpha = 0;
-        } else if (self.text.length != 0 || self.floatLabel.frame.origin.y != 0) {
-            
-            if (!self.isFirstResponder) {
-                self.floatLabel.textColor = self.floatLabelNormalColor;
-            }
-            self.floatLabel.frame = CGRectMake(0, 0, size.width, size.height);
-            self.floatLabel.alpha = 1.0;
+        self.floatLabel.textColor = focus ? self.floatFocusColor : self.floatNormalColor;
+        
+        if (floating) {
+            self.floatLabel.frame = CGRectMake(0, -size.height/2, size.width, size.height);
+        } else {
+            self.floatLabel.frame = CGRectMake(0, self.bounds.size.height-size.height, size.width, size.height);
         }
     }];
 }
 
-#pragma mark - system call
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    [self floatingPlaceHolder];
+#pragma mark - some default settings
+- (UIFont *)floatFont {
+    if (!_floatFont) {
+        _floatFont = [UIFont boldSystemFontOfSize:12];
+    }
+    return _floatFont;
+}
+
+- (UIColor *)floatNormalColor {
+    if (!_floatNormalColor) {
+        _floatNormalColor = [UIColor purpleColor];
+    }
+    return _floatNormalColor;
+}
+
+- (UIColor *)floatFocusColor {
+    if (!_floatFocusColor) {
+        _floatFocusColor = [UIColor greenColor];
+    }
+    return _floatFocusColor;
+}
+
+- (NSTimeInterval)floatingDuration {
+    if (_floatingDuration == 0) {
+        _floatingDuration = 0.5;
+    }
+    return _floatingDuration;
 }
 
 #pragma mark - Custom draw line
