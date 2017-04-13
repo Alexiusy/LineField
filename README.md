@@ -1,5 +1,7 @@
 # FXTextField ![](https://img.shields.io/badge/license-GPL%203.0-blue.svg) ![](https://img.shields.io/badge/pod-v1.0.0-blue.svg)
 
+![](https://github.com/Zeacone/FloatTextField/blob/master/screenshot.gif)
+
 A subclass of UITextField which has some features as follow.
 
 + Supports moving cursor by pan gesture.
@@ -8,7 +10,7 @@ A subclass of UITextField which has some features as follow.
 
 # Usage
 
-You can just use it as UITextField or change the class name as FXTextField in the storyboard or xib file.
+You can just use it as UITextField or change the class name as FloatTextField in the storyboard or xib file.
 
 **Code**
 

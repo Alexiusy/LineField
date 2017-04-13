@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
-    s.name         = ‘FloatTextField'
-    s.version      = ‘1.0.1’
+    s.name         = 'FloatTextField'
+    s.version      = '1.0.1'
     s.summary      = 'A subclass of UITextField which has some features.'
     s.homepage     = 'https://github.com/Zeacone/FloatTextField'
     s.license      = 'GPL'
