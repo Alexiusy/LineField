@@ -43,7 +43,8 @@
 - (void)setText:(NSString *)text {
     [super setText:text];
     
-    [self floating:self.text.length != 0 Focus:NO];
+    // 初始化float label位置
+    [self floating:self.text.length != 0 Focus:NO Initialize:YES];
 }
 
 - (void)defaultAppearance {
@@ -59,8 +60,8 @@
     
     self.placeholder = nil;
     
-    [self floating:self.text.length != 0 Focus:NO];
-
+    // 初始化float label位置
+    [self floating:self.text.length != 0 Focus:NO Initialize:YES];
     
     [self addPanGestureForScroll];
     [self addNotification];
@@ -88,7 +89,7 @@
     CGPoint translation = [pan translationInView:pan.view];
     
     // Control speed of text when scrolling.
-    if (call_count % (self.scrollSpeed==0?10:self.scrollSpeed) == 0) {
+    if (call_count % 30 == 0) {
         if (translation.x < 0) {
             newPosition = [self positionFromPosition:selectedRange.start inDirection:UITextLayoutDirectionRight offset:1];
         } else {
@@ -118,23 +119,30 @@
 
 #pragma mark - notification of textfield action
 - (void)textFieldDidBeginEditing:(NSNotification *)notification {
-    [self floating:self.text.length != 0 Focus:YES];
+    if (self.focusToFloat) {
+        [self floating:YES Focus:YES Initialize:NO];
+    } else {
+        [self floating:self.text.length != 0 Focus:YES Initialize:NO];
+    }
 }
 
 - (void)textFieldDidEndEditing:(NSNotification *)notification {
-    [self floating:self.text.length != 0 Focus:NO];
+    [self floating:self.text.length != 0 Focus:NO Initialize:NO];
 }
 
 - (void)textFieldTextDidChanged:(NSNotification *)notification {
-    [self floating:self.text.length != 0 Focus:YES];
+    if (self.focusToFloat) {
+        return;
+    }
+    [self floating:self.text.length != 0 Focus:YES Initialize:NO];
 }
 
 #pragma mark - Hidden/Show floating label
-- (void)floating:(BOOL)floating Focus:(BOOL)focus {
+- (void)floating:(BOOL)floating Focus:(BOOL)focus Initialize:(BOOL)initialize {
     
-    CGSize size = [self.floatLabel sizeThatFits:self.bounds.size];
+    CGSize size = CGSizeMake(self.bounds.size.width, self.floatFont.lineHeight);
     
-    [UIView animateWithDuration:self.floatingDuration animations:^{
+    [UIView animateWithDuration:initialize ? 0 : .5 animations:^{
         
         self.floatLabel.textColor = focus ? self.floatFocusColor : self.floatNormalColor;
         
@@ -148,31 +156,19 @@
 
 #pragma mark - some default settings
 - (UIFont *)floatFont {
-    if (!_floatFont) {
-        _floatFont = [UIFont boldSystemFontOfSize:12];
-    }
-    return _floatFont;
+    return _floatFont ? _floatFont : [UIFont boldSystemFontOfSize:12];
 }
 
 - (UIColor *)floatNormalColor {
-    if (!_floatNormalColor) {
-        _floatNormalColor = [UIColor purpleColor];
-    }
-    return _floatNormalColor;
+    return _floatNormalColor ? _floatNormalColor : [UIColor grayColor];
 }
 
 - (UIColor *)floatFocusColor {
-    if (!_floatFocusColor) {
-        _floatFocusColor = [UIColor greenColor];
-    }
-    return _floatFocusColor;
+    return _floatFocusColor ? _floatFocusColor : [UIColor purpleColor];
 }
 
-- (NSTimeInterval)floatingDuration {
-    if (_floatingDuration == 0) {
-        _floatingDuration = 0.5;
-    }
-    return _floatingDuration;
+- (UIColor *)bottomLineColor {
+    return _bottomLineColor ? _bottomLineColor : [UIColor greenColor];
 }
 
 #pragma mark - Custom draw line

@@ -31,16 +31,9 @@ IB_DESIGNABLE
  */
 @property (nonatomic, strong) IBInspectable UIColor *bottomLineColor;
 
-
-
 /**
- *  标签上浮或者隐藏的时间
+ YES: 当焦点移到该field时，立即将float label上移
  */
-@property (nonatomic, assign) IBInspectable NSTimeInterval floatingDuration;
-
-/**
- *  textfield文字滑动的速度，值越大，滑动速度越慢，默认为10
- */
-@property (nonatomic, assign) IBInspectable NSInteger scrollSpeed;
+@property (nonatomic, assign) IBInspectable BOOL focusToFloat;
 
 @end
