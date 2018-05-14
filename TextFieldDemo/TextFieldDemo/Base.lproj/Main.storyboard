@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TextFieldDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Cell Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rKE-Sf-ZHV" customClass="LineField" customModule="TextFieldDemo" customModuleProvider="target">
+                                <rect key="frame" x="20" y="40" width="560" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Wex-AF-CoG"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Yiless here." borderStyle="roundedRect" placeholder="Greetings" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="zux-zT-xOI" customClass="LineField" customModule="TextFieldDemo" customModuleProvider="target">
+                                <rect key="frame" x="20" y="110" width="560" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="XIU-ip-4WM"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="473823987327" borderStyle="roundedRect" placeholder="Input password here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Sf-rN-qC3" customClass="LineField" customModule="TextFieldDemo" customModuleProvider="target">
+                                <rect key="frame" x="20" y="160" width="560" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="hFW-5s-oCg"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="zux-zT-xOI" firstAttribute="leading" secondItem="rKE-Sf-ZHV" secondAttribute="leading" id="0AZ-2Z-VYc"/>
+                            <constraint firstItem="rKE-Sf-ZHV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="GgN-71-v3F"/>
+                            <constraint firstItem="7Sf-rN-qC3" firstAttribute="leading" secondItem="zux-zT-xOI" secondAttribute="leading" id="O04-kO-BGU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rKE-Sf-ZHV" secondAttribute="trailing" constant="20" id="Rzz-zg-2EG"/>
+                            <constraint firstItem="7Sf-rN-qC3" firstAttribute="top" secondItem="zux-zT-xOI" secondAttribute="bottom" constant="20" id="bqL-z1-9YM"/>
+                            <constraint firstItem="7Sf-rN-qC3" firstAttribute="trailing" secondItem="zux-zT-xOI" secondAttribute="trailing" id="dAl-u6-bLv"/>
+                            <constraint firstItem="rKE-Sf-ZHV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="fkK-tz-48H"/>
+                            <constraint firstItem="zux-zT-xOI" firstAttribute="top" secondItem="rKE-Sf-ZHV" secondAttribute="bottom" constant="30" id="gRB-XA-d1G"/>
+                            <constraint firstItem="zux-zT-xOI" firstAttribute="trailing" secondItem="rKE-Sf-ZHV" secondAttribute="trailing" id="vcd-uz-h7i"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="first" destination="rKE-Sf-ZHV" id="MZR-hJ-puM"/>
+                        <outlet property="second" destination="zux-zT-xOI" id="RQQ-9V-ddb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
+        </scene>
+    </scenes>
+</document>

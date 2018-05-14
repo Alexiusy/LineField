@@ -1,23 +1,25 @@
-# FXTextField ![](https://img.shields.io/badge/license-GPL%203.0-blue.svg) ![](https://img.shields.io/badge/pod-v1.0.0-blue.svg)
+# LineField ![](https://img.shields.io/badge/license-GPL%203.0-blue.svg) ![](https://img.shields.io/badge/pod-v1.0.0-blue.svg)
 
-![](https://github.com/Zeacone/FloatTextField/blob/master/screenshot.gif)
+![](http://7xlzdc.com1.z0.glb.clouddn.com/LineField.gif)
 
 A subclass of UITextField which has some features as follow.
 
-+ Supports moving cursor by pan gesture.
-+ Supports floating label to show it's placeholder text.
-+ To be continued.
-
 # Usage
 
-You can just use it as UITextField or change the class name as FloatTextField in the storyboard or xib file.
+You can just use it as UITextField or change the class name as LineField in the storyboard or xib file.
 
 **Code**
 
 ```objective-c
-FXTextField *textfield = [[FXTextField alloc] initWithFrame:frame];
+LineField *textfield = [[LineField alloc] initWithFrame:frame];
 // Set properties like bottom line color, float label color etc.
 [self.view addSubview:textfield];
+```
+
+```swift
+let field = LineField()
+// ...
+self.view.addSubview(field)
 ```
 
 **XIB/Storyboard**
