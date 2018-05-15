@@ -1,8 +1,12 @@
-# LineField ![](https://img.shields.io/badge/license-GPL%203.0-blue.svg) ![](https://img.shields.io/badge/pod-v1.0.0-blue.svg)
+# LineField ![](https://img.shields.io/badge/license-GPL%203.0-blue.svg)
+
+# Screenshot
 
 ![](http://7xlzdc.com1.z0.glb.clouddn.com/LineField.gif)
 
-A subclass of UITextField which has some features as follow.
+# Installation
+
+Just drag the file in `Classes` into your project.
 
 # Usage
 
@@ -24,4 +28,4 @@ self.view.addSubview(field)
 
 **XIB/Storyboard**
 
-Select your textfield control, go to the `inspector` =>`Custom Class` =>`Class` , Change it as `FXTextField`. OK, It's done.
+Select your textfield control, go to the `inspector` =>`Custom Class` =>`Class` , Change it as `LineField`. OK, It's done.
